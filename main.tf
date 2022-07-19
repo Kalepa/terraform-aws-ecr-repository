@@ -2,17 +2,17 @@ data "aws_region" "current" {}
 
 locals {
   // Calculate the repository and lifecycle policies based on the type of input variable
-  repository_policy = var.repository_policy == null ? null : (
-    can(keys(jsondecode(var.repository_policy))) ? var.repository_policy : (
-      can(keys(jsondecode(var.repository_policy.json))) ? var.repository_policy.json : (
-        jsonencode(var.repository_policy)
+  repository_policy = local.var_repository_policy == null ? null : (
+    can(keys(jsondecode(local.var_repository_policy))) ? local.var_repository_policy : (
+      can(keys(jsondecode(local.var_repository_policy.json))) ? local.var_repository_policy.json : (
+        jsonencode(local.var_repository_policy)
       )
     )
   )
 
-  lifecycle_policy = var.lifecycle_policy == null ? null : (
-    can(keys(jsondecode(var.lifecycle_policy))) ? var.lifecycle_policy : (
-      jsonencode(var.repository_policy)
+  lifecycle_policy = local.var_lifecycle_policy == null ? null : (
+    can(keys(jsondecode(local.var_lifecycle_policy))) ? local.var_lifecycle_policy : (
+      jsonencode(local.var_repository_policy)
     )
   )
 
