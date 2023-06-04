@@ -2,7 +2,7 @@
 data "aws_iam_policy_document" "ecr_pull" {
   dynamic "statement" {
     // This ternary looks odd, but it's designed to default to adding this statement if the variable is `null`.
-    for_each = local.var_include_registry_authorization_in_pull_policy != false ? [1] : []
+    for_each = var.include_registry_authorization_in_pull_policy != false ? [1] : []
     content {
       actions = [
         "ecr:GetAuthorizationToken",
@@ -21,16 +21,16 @@ data "aws_iam_policy_document" "ecr_pull" {
 }
 
 resource "aws_iam_policy" "ecr_pull" {
-  count  = local.var_create_policies == true ? 1 : 0
-  name   = "ecr-${local.var_name}"
+  count  = var.create_policies == true ? 1 : 0
+  name   = "ecr-${var.name}"
   path   = "/ecr/"
   policy = data.aws_iam_policy_document.ecr_pull.json
-  tags   = local.var_tags
+  tags   = var.tags
 }
 
 data "aws_iam_policy_document" "ecr_push" {
   dynamic "statement" {
-    for_each = local.var_include_registry_authorization_in_push_policy != false ? [1] : []
+    for_each = var.include_registry_authorization_in_push_policy != false ? [1] : []
     content {
       actions = [
         "ecr:GetAuthorizationToken",
@@ -49,9 +49,9 @@ data "aws_iam_policy_document" "ecr_push" {
 }
 
 resource "aws_iam_policy" "ecr_push" {
-  count  = local.var_create_policies == true ? 1 : 0
-  name   = "${local.var_name}-push"
+  count  = var.create_policies == true ? 1 : 0
+  name   = "${var.name}-push"
   path   = "/ecr/"
   policy = data.aws_iam_policy_document.ecr_push.json
-  tags   = local.var_tags
+  tags   = var.tags
 }

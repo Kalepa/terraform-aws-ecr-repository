@@ -3,27 +3,27 @@
 //==================================================
 output "name" {
   description = "The value of the `name` input variable."
-  value       = local.var_name
+  value       = var.name
 }
 output "mutable" {
   description = "The value of the `mutable` input variable, or the default value if the input was `null`."
-  value       = local.var_mutable
+  value       = var.mutable
 }
 output "scan_on_push" {
   description = "The value of the `scan_on_push` input variable, or the default value if the input was `null`."
-  value       = local.var_scan_on_push
+  value       = var.scan_on_push
 }
 output "kms_key_id" {
   description = "The value of the `kms_key_id` input variable."
-  value       = local.var_kms_key_id
+  value       = var.kms_key_id
 }
 output "generate_authorization_token" {
   description = "The value of the `generate_authorization_token` input variable, or the default value if the input was `null`."
-  value       = local.var_generate_authorization_token
+  value       = var.generate_authorization_token
 }
 output "create_repository_policy" {
   description = "The value of the `create_repository_policy` input variable, or the default value if the input was `null`."
-  value       = local.var_create_repository_policy
+  value       = var.create_repository_policy
 }
 output "repository_policy" {
   description = "The JSON-encoded repository access policy that was applied (normalized value of the `repository_policy` input variable)."
@@ -31,7 +31,7 @@ output "repository_policy" {
 }
 output "create_lifecycle_policy" {
   description = "The value of the `create_lifecycle_policy` input variable, or the default value if the input was `null`."
-  value       = local.var_create_lifecycle_policy
+  value       = var.create_lifecycle_policy
 }
 output "lifecycle_policy" {
   description = "The JSON-encoded lifecycle policy that was applied (normalized value of the `lifecycle_policy` input variable)."
@@ -39,19 +39,23 @@ output "lifecycle_policy" {
 }
 output "include_registry_authorization_in_push_policy" {
   description = "The value of the `include_registry_authorization_in_push_policy` input variable, or the default value if the input was `null`."
-  value       = local.var_include_registry_authorization_in_push_policy
+  value       = var.include_registry_authorization_in_push_policy
 }
 output "include_registry_authorization_in_pull_policy" {
   description = "The value of the `include_registry_authorization_in_pull_policy` input variable, or the default value if the input was `null`."
-  value       = local.var_include_registry_authorization_in_pull_policy
+  value       = var.include_registry_authorization_in_pull_policy
 }
 output "create_policies" {
   description = "The value of the `create_policies` input variable, or the default value if the input was `null`."
-  value       = local.var_create_policies
+  value       = var.create_policies
+}
+output "force_delete" {
+  description = "The value of the `force_delete` input variable, or the default value if the input was `null`."
+  value       = var.force_delete
 }
 output "tags" {
   description = "The value of the `tags` input variable, or the default value if the input was `null`."
-  value       = local.var_tags
+  value       = var.tags
 }
 
 
@@ -70,7 +74,7 @@ output "push_policy_json" {
 
 output "push_policy_arn" {
   description = "The ARN of an IAM policy that allows pushing images to the repository."
-  value       = local.var_create_policies ? aws_iam_policy.ecr_push[0].arn : null
+  value       = var.create_policies ? aws_iam_policy.ecr_push[0].arn : null
 }
 
 output "pull_policy_json" {
@@ -80,7 +84,7 @@ output "pull_policy_json" {
 
 output "pull_policy_arn" {
   description = "The ARN of an IAM policy that allows pulling images from the repository."
-  value       = local.var_create_policies ? aws_iam_policy.ecr_pull[0].arn : null
+  value       = var.create_policies ? aws_iam_policy.ecr_pull[0].arn : null
 }
 
 output "repository_domain" {
@@ -100,7 +104,7 @@ output "registry_id" {
 
 output "authorization_token" {
   description = "The attributes of the `aws_ecr_authorization_token` data source. A value will only be provided for this output if the `generate_authorization_token` variable was `true`."
-  value       = local.var_generate_authorization_token ? data.aws_ecr_authorization_token.this[0] : null
+  value       = var.generate_authorization_token ? data.aws_ecr_authorization_token.this[0] : null
 }
 
 output "iam_actions_pull" {

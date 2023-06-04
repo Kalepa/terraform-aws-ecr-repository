@@ -5,27 +5,21 @@ variable "name" {
     condition     = var.name != null
     error_message = "The `name` input variable cannot be `null`."
   }
-}
-locals {
-  var_name = var.name
+  nullable = false
 }
 
 variable "mutable" {
   description = "Whether images in the repository should be mutable."
   type        = bool
   default     = false
-}
-locals {
-  var_mutable = var.mutable != null ? var.mutable : false
+  nullable    = false
 }
 
 variable "scan_on_push" {
   description = "Whether to scan images when they are pushed to the repository."
   type        = bool
   default     = false
-}
-locals {
-  var_scan_on_push = var.scan_on_push != null ? var.scan_on_push : false
+  nullable    = false
 }
 
 variable "kms_key_id" {
@@ -33,26 +27,19 @@ variable "kms_key_id" {
   type        = string
   default     = null
 }
-locals {
-  var_kms_key_id = var.kms_key_id
-}
 
 variable "generate_authorization_token" {
   description = "Whether to generate an authorization token for logging into the repository. NOTE: the value will change on each plan and/or apply."
   type        = bool
   default     = false
-}
-locals {
-  var_generate_authorization_token = var.generate_authorization_token != null ? var.generate_authorization_token : false
+  nullable    = false
 }
 
 variable "create_repository_policy" {
   description = "Whether to apply an access policy to the repository. If this is set to `true`, then the `repository_policy` variable must also be provided."
   type        = bool
   default     = false
-}
-locals {
-  var_create_repository_policy = var.create_repository_policy != null ? var.create_repository_policy : false
+  nullable    = false
 }
 
 variable "repository_policy" {
@@ -65,17 +52,12 @@ variable "repository_policy" {
     error_message = "The `repository_policy` variable must be a JSON-formatted policy string, an `aws_iam_policy_document` data source object, or a JSON-encodable policy object."
   }
 }
-locals {
-  var_repository_policy = var.repository_policy
-}
 
 variable "create_lifecycle_policy" {
   description = "Whether to apply a lifecycle policy to the repository. If this is set to `true`, then the `lifecycle_policy` variable must also be provided."
   type        = bool
   default     = false
-}
-locals {
-  var_create_lifecycle_policy = var.create_lifecycle_policy != null ? var.create_lifecycle_policy : false
+  nullable    = false
 }
 
 variable "lifecycle_policy" {
@@ -88,42 +70,38 @@ variable "lifecycle_policy" {
     error_message = "The `lifecycle_policy` variable must be a JSON-formatted policy string or a JSON-encodable policy object."
   }
 }
-locals {
-  var_lifecycle_policy = var.lifecycle_policy
-}
 
 variable "include_registry_authorization_in_push_policy" {
   description = "Whether to include permission to get an authorization token for ECR in the push policy."
   type        = bool
   default     = true
-}
-locals {
-  var_include_registry_authorization_in_push_policy = var.include_registry_authorization_in_push_policy != null ? var.include_registry_authorization_in_push_policy : true
+  nullable    = false
 }
 
 variable "include_registry_authorization_in_pull_policy" {
   description = "Whether to include permission to get an authorization token for ECR in the pull policy."
   type        = bool
   default     = true
-}
-locals {
-  var_include_registry_authorization_in_pull_policy = var.include_registry_authorization_in_pull_policy != null ? var.include_registry_authorization_in_pull_policy : true
+  nullable    = false
 }
 
 variable "create_policies" {
   description = "Whether to create IAM policies for pushing and pulling from the registry."
   type        = bool
   default     = false
+  nullable    = false
 }
-locals {
-  var_create_policies = var.create_policies != null ? var.create_policies : false
+
+variable "force_delete" {
+  description = "If `true`, will delete the repository upon destroy even if it contains images."
+  type        = bool
+  default     = false
+  nullable    = false
 }
 
 variable "tags" {
   description = "Tags to apply to all resources created in this module."
   type        = map(string)
   default     = {}
-}
-locals {
-  var_tags = var.tags != null ? var.tags : {}
+  nullable    = false
 }
