@@ -105,3 +105,9 @@ variable "tags" {
   default     = {}
   nullable    = false
 }
+
+variable "region" {
+  description = "The AWS region. If not provided, will be looked up via data source."
+  type        = string
+  default     = null
+}

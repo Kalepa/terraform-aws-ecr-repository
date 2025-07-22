@@ -64,7 +64,7 @@ output "tags" {
 //==================================================
 output "region" {
   description = "The AWS region that this module was deployed in."
-  value       = data.aws_region.current.name
+  value       = local.region
 }
 
 output "push_policy_json" {
@@ -128,7 +128,6 @@ output "complete" {
     data.aws_iam_policy_document.ecr_push,
     aws_iam_policy.ecr_pull,
     aws_iam_policy.ecr_push,
-    data.aws_region.current,
   ]
   value = true
 }
